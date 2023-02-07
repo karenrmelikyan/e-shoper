@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', \App\Http\Controllers\Main\IndexController::class)->name('main.index');
 
-Route::get('/admin', \App\Http\Controllers\Admin::class);
+Route::resource('category', \App\Http\Controllers\CategoryController::class);
+Route::resource('tag', \App\Http\Controllers\TagController::class);
