@@ -17,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', \App\Http\Controllers\Admin\DashboardController::class)->name('main.index');
 Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
 Route::resource('tag', \App\Http\Controllers\Admin\TagController::class);
+Route::resource('user', \App\Http\Controllers\Admin\UserController::class);

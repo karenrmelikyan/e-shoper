@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Categories</h1>
+                    <h1 class="m-0">Users</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                           <a href="{{ route('category.create') }}" class="btn btn-primary">Add</a>
+                           <a href="{{ route('user.create') }}" class="btn btn-primary">Add</a>
                         </div>
 
                         <div class="card-body table-responsive p-0" style="height: 300px;">
@@ -34,14 +34,26 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Title</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Patronymic</th>
+                                    <th>Age</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Gender</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($categories as $category)
+                                @foreach($users as $user)
                                 <tr>
-                                    <td>{{ $category->id }}</td>
-                                    <td><a href="{{ route('category.show', $category) }}">{{ $category->title }}</a></td>
+                                    <td>{{ $user->id }}</td>
+                                    <td><a href="{{ route('user.show', $user) }}">{{ $user->name }}</a></td>
+                                    <td>{{ $user->surname }}</td>
+                                    <td>{{ $user->patronymic }}</td>
+                                    <td>{{ $user->age }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->address }}</td>
+                                    <td>{{ $user->gender }}</td>
                                 </tr>
                                 @endforeach
                                 </tbody>
