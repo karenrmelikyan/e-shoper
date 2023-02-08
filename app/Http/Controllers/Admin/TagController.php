@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\StoreRequest;
 use App\Http\Requests\Tag\UpdateRequest;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
