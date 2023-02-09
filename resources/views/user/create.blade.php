@@ -44,6 +44,9 @@
                         <input type="password" name="password" value="{{ old('password') }}" class="form-control" placeholder="password">
                     </div>
                     <div class="form-group">
+                        <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-control" placeholder="confirm password">
+                    </div>
+                    <div class="form-group">
                         <input type="text" name="address" value="{{ old('address') }}" class="form-control" placeholder="Address">
                     </div>
                     <div class="form-group">
