@@ -333,7 +333,28 @@
 
 <script>
 export default {
-    name: "Shop"
+    name: "Shop",
+
+    data() {
+        return {
+            items: {}
+        }
+    },
+
+    methods: {
+        getShopItems() {
+            this.axios.get(this.domain + '/api/v1/products')
+                .then(res => {
+                   this.items = res.data
+                }).catch(err => {
+                console.log(err)
+            })
+        }
+    },
+
+    mounted() {
+       this.getShopItems()
+    }
 }
 </script>
 
