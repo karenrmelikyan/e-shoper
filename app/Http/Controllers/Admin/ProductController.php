@@ -7,12 +7,10 @@ use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductTag;
 use App\Models\Tag;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -136,10 +134,12 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // access to pivot columns
 //        foreach ($product->tags as $tag) {
 //            echo $tag->pivot->tag_id;
 //        }
 
+        // delete restrictions before removing
         $product->tags()->detach();
         $product->delete();
 
