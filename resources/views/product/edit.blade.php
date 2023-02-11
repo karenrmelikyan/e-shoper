@@ -61,7 +61,7 @@
                         <select name="category_id" class="form-control select2" style="width: 100%;">
                             @foreach($categories as $category)
                                 @if ($category->id === $product->category->id)
-                                    <option selected="selected">{{ $product->category->title }}</option>
+                                    <option value="{{ $product->category->id }}" selected="selected">{{ $product->category->title}}</option>
                                     @else
                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
                                 @endif

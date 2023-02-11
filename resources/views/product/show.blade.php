@@ -59,6 +59,15 @@
                                     <td>Category</td>
                                     <td>{{ $product->category->title }}</td> <!-- One to Many relation -->
                                 </tr>
+
+                                <tr>
+                                    <td>Tags</td>
+                                    <td>
+                                        @foreach($product->tags as $tag)<!-- Many to Many relation -->
+                                            {{ $tag->title . ', ' }}
+                                        @endforeach
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

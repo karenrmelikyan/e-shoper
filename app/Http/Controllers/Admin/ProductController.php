@@ -9,6 +9,9 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductTag;
 use App\Models\Tag;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +20,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -31,7 +34,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -54,6 +57,7 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
+        // save picture to storage & get path to it
         $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
 
         // remove extra data "tags" from data
@@ -62,17 +66,8 @@ class ProductController extends Controller
 
         $product = Product::firstOrCreate($data);
 
-//        foreach ($tagIDs as $tagID) {
-//            ProductTag::firstOrCreate([
-//                'product_id' => $product->id,
-//                'tag_id' => $tagID,
-//            ]);
-//        }
-
-        // Same via Laravel relations
-        foreach ($tagIDs as $tagID) {
-            $product->tags()->attach($tagID);
-        }
+        // set correct tag's IDs
+        $product->tags()->attach($tagIDs);
 
         return redirect()->route('product.index');
     }
@@ -81,7 +76,7 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Product $product
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function show(Product $product)
     {
@@ -94,7 +89,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Product $product
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function edit(Product $product)
     {
@@ -125,9 +120,8 @@ class ProductController extends Controller
         $tagIDs = $data['tags'];
         unset($data['tags']);
 
-        foreach ($tagIDs as $tagID) {
-            $product->tags()->attach($tagID);
-        }
+        // sync method useful during update
+        $product->tags()->sync($tagIDs);
 
         $product->update($data);
 
@@ -142,11 +136,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+//        foreach ($product->tags as $tag) {
+//            echo $tag->pivot->tag_id;
+//        }
 
-        foreach ($product->tags as $tag) {
-            $tag->delete();
-        }
-
+        $product->tags()->detach();
         $product->delete();
 
         return redirect()->route('product.index');
