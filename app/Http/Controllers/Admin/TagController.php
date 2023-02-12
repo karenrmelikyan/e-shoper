@@ -6,15 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Tag\StoreRequest;
 use App\Http\Requests\Admin\Tag\UpdateRequest;
 use App\Models\Tag;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $tags = Tag::all();
 
@@ -26,9 +28,9 @@ class TagController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('tag.create');
     }
@@ -36,10 +38,10 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param StoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
         $data = $request->validated();
         Tag::firstOrCreate($data);
@@ -50,10 +52,10 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param Tag $tag
+     * @return View
      */
-    public function show(Tag $tag)
+    public function show(Tag $tag): View
     {
         return view('tag.show', [
             'tag' => $tag,
@@ -63,10 +65,10 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param Tag $tag
+     * @return View
      */
-    public function edit(Tag $tag)
+    public function edit(Tag $tag): View
     {
         return view('tag.edit', [
             'tag' => $tag,
@@ -76,11 +78,11 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\RedirectResponse
+     * @param UpdateRequest $request
+     * @param Tag $tag
+     * @return RedirectResponse
      */
-    public function update(UpdateRequest $request, Tag $tag)
+    public function update(UpdateRequest $request, Tag $tag): RedirectResponse
     {
         $data = $request->validated();
         $tag->update($data);
@@ -91,10 +93,10 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Tag $tag
+     * @return RedirectResponse
      */
-    public function destroy(Tag $tag)
+    public function destroy(Tag $tag): RedirectResponse
     {
         $tag->delete();
 

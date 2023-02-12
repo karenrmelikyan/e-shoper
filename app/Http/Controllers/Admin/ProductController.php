@@ -8,9 +8,8 @@ use App\Http\Requests\Admin\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -18,9 +17,9 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|View
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $products = Product::all();
 
@@ -32,9 +31,9 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $categories = Category::all();
         $tags = Tag::all();
@@ -48,10 +47,10 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param StoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
@@ -73,10 +72,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Product $product
-     * @return Application|Factory|View
+     * @param Product $product
+     * @return View
      */
-    public function show(Product $product)
+    public function show(Product $product): View
     {
         return view('product.show', [
             'product' => $product,
@@ -86,10 +85,10 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Product $product
-     * @return Application|Factory|View
+     * @param Product $product
+     * @return View
      */
-    public function edit(Product $product)
+    public function edit(Product $product): View
     {
         $categories = Category::all();
         $tags = Tag::all();
@@ -104,11 +103,11 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\RedirectResponse
+     * @param UpdateRequest $request
+     * @param Product $product
+     * @return RedirectResponse
      */
-    public function update(UpdateRequest $request, Product $product)
+    public function update(UpdateRequest $request, Product $product): RedirectResponse
     {
         $data = $request->validated();
 
@@ -129,10 +128,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Product $product
+     * @return RedirectResponse
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
         // access to pivot columns
 //        foreach ($product->tags as $tag) {

@@ -6,15 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreRequest;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $tags = User::all();
 
@@ -26,9 +28,9 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('user.create');
     }
@@ -36,10 +38,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param StoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
         $data = $request->validated();
         User::firstOrCreate($data);
@@ -50,10 +52,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param User $user
+     * @return View
      */
-    public function show(User $user)
+    public function show(User $user): View
     {
         return view('user.show', [
             'user' => $user,
@@ -63,10 +65,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param User $user
+     * @return View
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         return view('user.edit', [
             'user' => $user,
@@ -77,10 +79,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRequest $request
-     * @param \App\Models\User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function update(UpdateRequest $request, User $user)
+    public function update(UpdateRequest $request, User $user): RedirectResponse
     {
         $data = $request->validated();
         $user->update($data);
@@ -91,10 +93,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $user->delete();
 
