@@ -3,7 +3,7 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
 
-            <ShopSidebarFilter />
+            <SidebarFilter />
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-12">
@@ -36,9 +36,11 @@
 
                     <div v-for="product in products" class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                <img class="img-fluid w-100" :src="product.image_url" alt="">
-                            </div>
+                            <router-link :to="{name: 'detail', params: {id: product.id}}">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" :src="product.image_url" alt="">
+                                </div>
+                            </router-link>
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                 <h6 class="text-truncate mb-3">{{ product.title }}</h6>
                                 <div class="d-flex justify-content-center">
@@ -82,12 +84,12 @@
 </template>
 
 <script>
-import ShopSidebarFilter from "../components/ShopSidebarFilter.vue";
+import SidebarFilter from "../components/ShopSidebarFilter.vue";
 export default {
     name: "Shop",
 
     components: {
-        ShopSidebarFilter,
+        SidebarFilter,
     },
 
     data() {
@@ -98,7 +100,7 @@ export default {
 
     methods: {
         getShopItems() {
-            this.axios.get(this.domain + '/api/v1/products')
+            this.axios.get(this.domain + '/api/v1/products/')
                 .then(res => {
                    this.products = res.data.data
                 }).catch(err => {

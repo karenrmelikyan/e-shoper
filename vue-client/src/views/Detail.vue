@@ -238,7 +238,28 @@
 
 <script>
 export default {
-    name: "Detail"
+    name: "Detail",
+
+    data() {
+        return {
+           id: this.$route.params.id
+        }
+    },
+
+    methods: {
+        getItem(id) {
+            this.axios.get(this.domain + '/api/v1/detail/' + id)
+                .then(res => {
+                    console.log(res.data)
+                }).catch(err => {
+
+            })
+        }
+    },
+
+    mounted() {
+        this.getItem(this.id)
+    }
 }
 </script>
 
