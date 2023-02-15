@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +20,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Admin routes
-Route::get('/', \App\Http\Controllers\Admin\DashboardController::class)->name('main.index');
-Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
-Route::resource('tag', \App\Http\Controllers\Admin\TagController::class);
-Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
-Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
+Route::middleware(['auth', 'check.user.role'])->group(function() {
+    Route::get('/', DashboardController::class)->name('main.index');
+    Route::resource('category', CategoryController::class);
+    Route::resource('tag', TagController::class);
+    Route::resource('user', UserController::class);
+    Route::resource('product', ProductController::class);
+});
+
+// Admin authentication
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
