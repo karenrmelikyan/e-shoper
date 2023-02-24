@@ -58,7 +58,7 @@ const router = createRouter({
             path: '/detail/:id',
             name: 'detail',
             component: defineAsyncComponent(() => import('../views/Detail.vue'))
-        }
+        },
     ]
 })
 
