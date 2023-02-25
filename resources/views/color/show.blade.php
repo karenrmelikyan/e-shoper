@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Products</h1>
+                    <h1 class="m-0">Tag</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -25,35 +25,32 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                           <a href="{{ route('product.create') }}" class="btn btn-primary">Add</a>
+                        <div class="card-header d-flex p-3">
+                            <div class="mr-3">
+                                <a href="{{ route('color.edit', $color) }}" class="btn btn-primary">Edit</a>
+                            </div>
+                            <form action="{{ route('color.destroy', $color) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         </div>
 
                         <div class="card-body table-responsive p-0" style="height: 300px;">
                             <table class="table table-head-fixed text-nowrap">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Price</th>
-                                    <th>Category</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                @foreach($products as $product)
                                 <tr>
-                                    <td>{{ $product->id }}</td>
-                                    <td><a href="{{ route('product.show', $product) }}">{{ $product->title }}</a></td>
-                                    <td>{{ $product->price }}</td>
-                                    <td>{{ $product->category?->title}}</td>
+                                    <td>ID</td>
+                                    <td>{{ $color->id }}</td>
                                 </tr>
-                                @endforeach
+                                <tr>
+                                    <td>Title</td>
+                                    <td>{{ $color->title }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
-
                 </div>
             </div>
             <!-- /.row -->
