@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
+use App\Models\Color;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -37,10 +38,12 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
+        $colors = Color::all();
 
         return view('product.create', [
             'categories' => $categories,
             'tags' => $tags,
+            'colors' => $colors,
         ]);
     }
 
@@ -92,11 +95,13 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
+        $colors = Color::all();
 
         return view('product.edit', [
             'product' => $product,
             'categories' => $categories,
             'tags' => $tags,
+            'colors' => $colors,
         ]);
     }
 

@@ -27,22 +27,28 @@
                     @csrf
                     @method('patch')
                     <div class="form-group">
-                        <input type="text" name="title" value="{{ $product->title }}" class="form-control" placeholder="Title">
+                        <input type="text" name="title" value="{{ $product->title }}" class="form-control"
+                               placeholder="Title">
                     </div>
                     <div class="form-group">
-                        <input type="text" name="description" value="{{ $product->description }}" class="form-control" placeholder="Description">
+                        <input type="text" name="description" value="{{ $product->description }}" class="form-control"
+                               placeholder="Description">
                     </div>
                     <div class="form-group">
-                        <textarea type="text" name="content" class="form-control" placeholder="{{ $product->content }}"></textarea>
+                        <textarea type="text" name="content" class="form-control"
+                                  placeholder="{{ $product->content }}"></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="price" value="{{ $product->price }}" class="form-control" placeholder="Price">
+                        <input type="text" name="price" value="{{ $product->price }}" class="form-control"
+                               placeholder="Price">
                     </div>
                     <div class="form-group">
-                        <input type="text" name="count" value="{{ $product->count }}" class="form-control" placeholder="Count in the stock">
+                        <input type="text" name="count" value="{{ $product->count }}" class="form-control"
+                               placeholder="Count in the stock">
                     </div>
                     <div class="form-group">
-                        <input type="text" name="preview_image" value="{{ $product->preview_image }}" class="form-control">
+                        <input type="text" name="preview_image" value="{{ $product->preview_image }}"
+                               class="form-control">
                     </div>
 
                     <div class="form-group">
@@ -61,18 +67,55 @@
                         <select name="category_id" class="form-control select2" style="width: 100%;">
                             @foreach($categories as $category)
                                 @if ($category->id === $product->category->id)
-                                    <option value="{{ $product->category->id }}" selected="selected">{{ $product->category->title}}</option>
-                                    @else
-                                       <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                    <option value="{{ $product->category->id }}"
+                                            selected="selected">{{ $product->category->title}}</option>
+                                @else
+                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
                                 @endif
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group">
+                        <select name="colors[]" class="tags" multiple="multiple" data-placeholder="Select colors" style="width: 100%;">
+                            @php
+                              $currentColors = [];
+                            @endphp
+                            @foreach($product->colors as $productColor)
+                                @php
+                                   $currentColors[] = $productColor->id;
+                                @endphp
+                                <option value="{{ $productColor->id }}" selected="selected">{{ $productColor->title }}</option>
+                            @endforeach
+
+                            @foreach($colors as $color)
+                                @php
+                                    if(!in_array($color->id, $currentColors)) {
+                                        echo "<option value='$color->id'>$color->title</option>";
+                                    }
+                                @endphp
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <select name="tags[]" class="tags" multiple="multiple" data-placeholder="Select tags" style="width: 100%;">
+                            @php
+                                $currentTags = [];
+                            @endphp
+                            @foreach($product->tags as $productTag)
+                                @php
+                                    $currentTags[] = $productTag->id;
+                                @endphp
+                                <option value="{{ $productTag->id }}" selected="selected">{{ $productTag->title }}</option>
+                            @endforeach
+
                             @foreach($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->title }}</option>
+                                @php
+                                    if(!in_array($tag->id, $currentTags)) {
+                                        echo "<option value='$tag->id'>$tag->title</option>";
+                                    }
+                                @endphp
                             @endforeach
                         </select>
                     </div>

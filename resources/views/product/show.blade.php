@@ -57,14 +57,23 @@
                                 </tr>
                                 <tr>
                                     <td>Category</td>
-                                    <td>{{ $product->category->title }}</td> <!-- One to Many relation -->
+                                    <td>{{ $product->category?->title }}</td> <!-- One to Many relation -->
+                                </tr>
+
+                                <tr>
+                                    <td>Colors</td>
+                                    <td>
+                                        @foreach($product->colors as $color)<!-- Many to Many relation -->
+                                        {{ $color?->title . ', ' }}
+                                        @endforeach
+                                    </td>
                                 </tr>
 
                                 <tr>
                                     <td>Tags</td>
                                     <td>
                                         @foreach($product->tags as $tag)<!-- Many to Many relation -->
-                                            {{ $tag->title . ', ' }}
+                                            {{ $tag?->title . ', ' }}
                                         @endforeach
                                     </td>
                                 </tr>

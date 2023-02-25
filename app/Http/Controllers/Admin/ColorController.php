@@ -20,8 +20,10 @@ class ColorController extends Controller
      */
     public function index()
     {
+        $colors = Color::all();
+
         return view('color.index', [
-            'colors' => Color::all(),
+            'colors' => $colors,
         ]);
     }
 

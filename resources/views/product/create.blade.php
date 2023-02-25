@@ -63,6 +63,15 @@
                     </div>
 
                     <div class="form-group">
+                        <select name="tags[]" class="tags" multiple="multiple" data-placeholder="Select colors"
+                                style="width: 100%;">
+                            @foreach($colors as $color)
+                                <option value="{{ $color->id }}">{{ $color->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <select name="tags[]" class="tags" multiple="multiple" data-placeholder="Select tags"
                                 style="width: 100%;">
                             @foreach($tags as $tag)
