@@ -259,7 +259,7 @@ export default {
 
     methods: {
         getItem(id) {
-            this.axios.get(this.domain + '/api/v1/detail/' + id)
+            this.axios.get(`${this.domain}/api/v1/products/${id}`)
                 .then(res => {
                     this.product = res.data.data
                 }).catch(err => {

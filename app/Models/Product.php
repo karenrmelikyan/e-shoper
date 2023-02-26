@@ -22,7 +22,7 @@ class Product extends Model
         'category_id',
     ];
 
-    public function colors()
+    public function colors(): BelongsToMany
     {
         return $this->belongsToMany(Color::class);
     }

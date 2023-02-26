@@ -3,7 +3,7 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
 
-            <SidebarFilter />
+            <SidebarFilter ref="child" @applied-filter="test" />
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-12">
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import SidebarFilter from "../components/ShopSidebarFilter.vue";
+import SidebarFilter from "../components/SidebarFilter.vue";
 export default {
     name: "Shop",
 
@@ -99,8 +99,14 @@ export default {
     },
 
     methods: {
+
+        test() {
+            console.log(this.$refs.child.products)
+            //console.log('iefbvwv')
+        },
+
         getShopItems() {
-            this.axios.get(this.domain + '/api/v1/products/')
+            this.axios.get(`${this.domain}/api/v1/products/`)
                 .then(res => {
                    this.products = res.data.data
                 }).catch(err => {
