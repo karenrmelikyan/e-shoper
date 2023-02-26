@@ -64,10 +64,18 @@ class ProductController extends Controller
         $tagIDs = $data['tags'];
         unset($data['tags']);
 
+        // remove extra data colors from data
+        $colorIDs = $data['colors'];
+        unset($data['colors']);
+
+        // create new product
         $product = Product::firstOrCreate($data);
 
         // set correct tag's IDs
         $product->tags()->attach($tagIDs);
+
+        // set correct colors IDs
+        $product->colors()->attach($colorIDs);
 
         return redirect()->route('product.index');
     }
@@ -118,12 +126,16 @@ class ProductController extends Controller
 
         $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
 
-        // remove extra data "tags" from data
+        // remove extra data "tags" and "colors" from data
         $tagIDs = $data['tags'];
         unset($data['tags']);
 
+        $colorsIds = $data['colors'];
+        unset($data['colors']);
+
         // sync method useful during update
         $product->tags()->sync($tagIDs);
+        $product->colors()->sync($colorsIds);
 
         $product->update($data);
 
@@ -145,6 +157,9 @@ class ProductController extends Controller
 
         // delete restrictions before removing
         $product->tags()->detach();
+        $product->colors()->detach();
+
+        // remove
         $product->delete();
 
         return redirect()->route('product.index');
