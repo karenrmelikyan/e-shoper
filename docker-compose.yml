@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+
+  app:
+    build: ./docker/app
+    volumes:
+      - ./:/var/www
+    container_name: my_app
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+    ports:
+      - 8090:90
+    container_name: my_nginx
+
+  db:
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - ./tmp/db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: eshoper
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 8101:3306
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    container_name: my_db
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+#      - UPLOAD_LIMIT=8M # increase dump size limit if necessary
+#      - MAX_EXECUTION_TIME=3600 # increase PHP execution time if necessary
