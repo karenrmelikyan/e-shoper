@@ -6,11 +6,6 @@
             <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
             <form>
                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="price-all">
-                    <label class="custom-control-label" for="price-all">All Price</label>
-                    <span class="badge border font-weight-normal">1000</span>
-                </div>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                     <input type="checkbox" class="custom-control-input" id="price-1">
                     <label class="custom-control-label" for="price-1">$0 - $100</label>
                     <span class="badge border font-weight-normal">150</span>
@@ -43,11 +38,6 @@
         <div class="mb-5">
             <h5 class="font-weight-semi-bold mb-4">Filter by categories</h5>
             <form>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="all_categories">
-                    <label class="custom-control-label" for="all_categories">All Categories</label>
-                    <span class="badge border font-weight-normal">1000</span>
-                </div>
                 <div v-for="category in filterList.categories" class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                     <input v-model="categories" :value="category.id" type="checkbox" class="custom-control-input" :id="`category_${category.id}`">
                     <label class="custom-control-label" :for="`category_${category.id}`">{{ category.title }}</label>
@@ -61,11 +51,6 @@
         <div class="mb-5">
             <h5 class="font-weight-semi-bold mb-4">Filter by colors</h5>
             <form>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="all_colors">
-                    <label class="custom-control-label" for="all_colors">All Colors</label>
-                    <span class="badge border font-weight-normal">1000</span>
-                </div>
                 <div v-for="color in filterList.colors" class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                     <input v-model="colors" :value="color.id" type="checkbox" class="custom-control-input" :id="`color_${color.id}`">
                     <label class="custom-control-label" :for="`color_${color.id}`">{{ color.title }}</label>
@@ -79,11 +64,6 @@
         <div class="mb-5">
             <h5 class="font-weight-semi-bold mb-4">Filter by tags</h5>
             <form>
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" checked id="all_tags">
-                    <label class="custom-control-label" for="all_tags">All Tags</label>
-                    <span class="badge border font-weight-normal">1000</span>
-                </div>
                 <div v-for="tag in filterList.tags" class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                     <input v-model="tags" :value="tag.id"  type="checkbox" class="custom-control-input" :id="`tag_${tag.id}`">
                     <label class="custom-control-label" :for="`tag_${tag.id}`">{{ tag.title }}</label>
@@ -113,13 +93,14 @@ export default {
     },
 
     methods: {
+
          applyFilters()  {
              this.axios.post(`${this.domain}/api/v1/filter`, {
                  'categories': this.categories,
                  'colors': this.colors,
                  'tags': this.tags,
              }).then(res => {
-                 this.products = res.data;
+                 this.products = res.data.data;
                  this.$emit('applied-filter')
              }).catch(err => {
                  console.log(err)

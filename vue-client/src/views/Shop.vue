@@ -3,7 +3,7 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
 
-            <SidebarFilter ref="child" @applied-filter="test" />
+            <SidebarFilter ref="child" @applied-filter="updateProducts" />
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-12">
@@ -99,10 +99,8 @@ export default {
     },
 
     methods: {
-
-        test() {
-            console.log(this.$refs.child.products)
-            //console.log('iefbvwv')
+        updateProducts() {
+            this.products = this.$refs.child.products
         },
 
         getShopItems() {
