@@ -7,6 +7,18 @@ use Illuminate\Support\Collection;
 
 class ProductsFilter implements Contracts\ProductsFilterInterface
 {
+    public function getByPriceRange(array $rangeIndexes = []): Collection
+    {
+        if (empty($rangeIndexes)) {
+            return new \Illuminate\Database\Eloquent\Collection([]);
+        }
+
+        $min = min($rangeIndexes);
+        $max = max($rangeIndexes) + 100;
+
+        return Product::whereBetween('price', [$min, $max])->get();
+    }
+
     public function getByCategories(array $categories = []): Collection
     {
         if (empty($categories)) {

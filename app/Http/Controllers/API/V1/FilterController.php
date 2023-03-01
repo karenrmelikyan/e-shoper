@@ -11,7 +11,7 @@ use App\Models\Tag;
 use App\Repositories\Contracts\ProductsFilterInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\API\Filter\IndexRequest;
+use App\Http\Requests\API\Filter\FilterRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class FilterController extends Controller
@@ -38,16 +38,18 @@ class FilterController extends Controller
         return response()->json($response);
     }
 
-    public function getFiltered(IndexRequest $request, ProductsFilterInterface $productFilter): AnonymousResourceCollection
+    public function getFiltered(FilterRequest $request, ProductsFilterInterface $productFilter): AnonymousResourceCollection
     {
         $data = $request->validated();
 
+        $productsByPricesRange = $productFilter->getByPriceRange($data['prices']);
         $productsByCategories = $productFilter->getByCategories($data['categories']);
         $productsByColors = $productFilter->getByColors($data['colors']);
         $productsByTags = $productFilter->getByTags($data['tags']);
 
         // merge all collections for sorting by unique
-        $uniqueCollection = $productsByCategories
+        $uniqueCollection = $productsByPricesRange
+            ->merge($productsByCategories)
             ->merge($productsByColors)
             ->merge($productsByTags)
             ->unique();

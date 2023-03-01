@@ -39,3 +39,8 @@ services:
       - PMA_ARBITRARY=1
 #      - UPLOAD_LIMIT=8M # increase dump size limit if necessary
 #      - MAX_EXECUTION_TIME=3600 # increase PHP execution time if necessary
+
+# docker compose (up -d)/(down): docker builder run/down
+# external port:inner port
+
+

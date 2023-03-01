@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\Filter;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class IndexRequest extends FormRequest
+class FilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class IndexRequest extends FormRequest
     public function rules()
     {
         return [
-            //'prices' => '',
+            'prices' => 'nullable|array',
             'categories' => 'nullable|array',
             'colors' => 'nullable|array',
             'tags' => 'nullable|array',
