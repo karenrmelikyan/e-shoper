@@ -54,6 +54,11 @@ class FilterController extends Controller
             ->merge($productsByTags)
             ->unique();
 
+        // if was not selected any filter, return all products
+        if ($uniqueCollection->isEmpty()) {
+            return ProductResource::collection(Product::all());
+        }
+
         return ProductResource::collection($uniqueCollection->all());
     }
 
