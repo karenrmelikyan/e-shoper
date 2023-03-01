@@ -42,7 +42,7 @@ class FilterController extends Controller
     {
         $data = $request->validated();
 
-        $productsByPricesRange = $productFilter->getByPriceRange($data['prices']);
+        $productsByPricesRange = $productFilter->getByPricesRange($data['prices']);
         $productsByCategories = $productFilter->getByCategories($data['categories']);
         $productsByColors = $productFilter->getByColors($data['colors']);
         $productsByTags = $productFilter->getByTags($data['tags']);
