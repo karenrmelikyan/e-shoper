@@ -3,7 +3,7 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
 
-            <SidebarFilter ref="child" @applied-filter="updateProducts" />
+            <SidebarFilter ref="sidebar" @applied-filter="updateProducts" />
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-12">
@@ -20,23 +20,14 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="dropdown ml-4">
-                                <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    Sort by
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                    <a class="dropdown-item" href="#">Latest</a>
-                                    <a class="dropdown-item" href="#">Popularity</a>
-                                    <a class="dropdown-item" href="#">Best Rating</a>
-                                </div>
-                            </div>
+
+                            <SortBy />
                         </div>
                     </div>
 
                     <div v-for="product in products" class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
-                            <router-link :to="{name: 'detail', params: {id: product.id}}">
+                            <router-link :to="{name: 'product', params: {id: product.id}}">
                                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                                     <img class="img-fluid w-100" :src="product.image_url" alt="">
                                 </div>
@@ -85,11 +76,14 @@
 
 <script>
 import SidebarFilter from "../components/SidebarFilter.vue";
+import SortBy from "../components/SortBy.vue";
+
 export default {
     name: "Shop",
 
     components: {
         SidebarFilter,
+        SortBy,
     },
 
     data() {
@@ -99,8 +93,9 @@ export default {
     },
 
     methods: {
+
         updateProducts() {
-            this.products = this.$refs.child.products
+            this.products = this.$refs.sidebar.products
         },
 
         getShopItems() {

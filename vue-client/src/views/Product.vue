@@ -190,8 +190,6 @@
                             <div class="col-md-6">
                                 <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
                                 <div class="media mb-4">
-                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-                                         style="width: 45px;">
                                     <div class="media-body">
                                         <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
                                         <div class="text-primary mb-2">
@@ -248,7 +246,7 @@
 
 <script>
 export default {
-    name: "Detail",
+    name: "Product",
 
     data() {
         return {
@@ -263,7 +261,7 @@ export default {
                 .then(res => {
                     this.product = res.data.data
                 }).catch(err => {
-
+                    console.log(err);
             })
         }
     },

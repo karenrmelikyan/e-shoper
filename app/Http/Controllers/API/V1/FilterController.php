@@ -10,7 +10,6 @@ use App\Models\Product;
 use App\Models\Tag;
 use App\Repositories\Contracts\ProductsFilterInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Http\Requests\API\Filter\FilterRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 

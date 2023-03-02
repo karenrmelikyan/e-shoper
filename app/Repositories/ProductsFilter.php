@@ -14,9 +14,9 @@ class ProductsFilter implements Contracts\ProductsFilterInterface
         }
 
         $query = Product::where('price', '=', 0);
-        foreach ($rangeIndexes as $index) {
-            $max = $index + 100;
-            $query->orWhereBetween('price', [$index, $max]);
+        foreach ($rangeIndexes as $minValue) {
+            $maxValue = $minValue + 100;
+            $query->orWhereBetween('price', [$minValue, $maxValue]);
         }
 
         return $query->get();
