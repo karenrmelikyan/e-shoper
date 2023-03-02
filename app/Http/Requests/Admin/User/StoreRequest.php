@@ -32,6 +32,7 @@ class StoreRequest extends FormRequest
             'age' => 'nullable|integer',
             'address' => 'nullable|string',
             'gender' => 'nullable|integer',
+            'role' => 'required|string',
         ];
     }
 }

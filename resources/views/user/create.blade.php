@@ -56,6 +56,13 @@
                             <option value="2">Male</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <select name="role" class="custom-select form-control">
+                            <option disabled selected>Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="customer">Customer</option>
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Add</button>

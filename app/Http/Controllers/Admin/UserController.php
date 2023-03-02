@@ -82,9 +82,10 @@ class UserController extends Controller
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(UpdateRequest $request, User $user): RedirectResponse
+    public function update(UpdateRequest $request, User $user)//: RedirectResponse
     {
         $data = $request->validated();
+
         $user->update($data);
 
         return redirect()->route('user.index');
