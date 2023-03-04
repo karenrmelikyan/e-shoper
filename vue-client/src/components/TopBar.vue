@@ -22,7 +22,7 @@
             <div class="col-lg-3 col-6 text-right">
                 <router-link to="/cart" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">{{ cartCount }}</span>
                 </router-link>
             </div>
         </div>
@@ -32,7 +32,31 @@
 
 <script>
 export default {
-    name: "Topbar"
+    name: "Topbar",
+
+    data() {
+        return {
+            cartCount: 0,
+        }
+    },
+
+    methods: {
+        updateCartCount() {
+            this.cartCount = 0
+            let productsInCart = localStorage.getItem('cart')
+            if (productsInCart) {
+                productsInCart = JSON.parse(productsInCart)
+                productsInCart.forEach(product => {
+                    this.cartCount += product.qty
+                })
+            }
+        }
+    },
+
+    mounted() {
+        this.updateCartCount()
+    }
+
 }
 </script>
 

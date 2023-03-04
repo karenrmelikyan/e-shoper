@@ -1,5 +1,5 @@
 <template>
-    <TopBar />
+    <TopBar ref="topBar"/>
     <NavBar />
     <SupportChat />
 </template>
@@ -15,7 +15,7 @@ export default {
         TopBar,
         NavBar,
         SupportChat,
-    }
+    },
 }
 </script>
 

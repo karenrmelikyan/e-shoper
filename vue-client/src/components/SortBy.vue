@@ -4,8 +4,8 @@
             Sort by {{ by }}
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-            <a @click.prevent="sortByName" class="dropdown-item" href="#">Name</a>
-            <a @click.prevent="sortByPrice" class="dropdown-item" href="#">Price</a>
+            <button @click.prevent="sortByName" class="dropdown-item">Name</button>
+            <button @click.prevent="sortByPrice" class="dropdown-item">Price</button>
         </div>
     </div>
 </template>
