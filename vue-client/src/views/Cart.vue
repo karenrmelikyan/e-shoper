@@ -14,110 +14,26 @@
                     </tr>
                     </thead>
                     <tbody class="align-middle">
-                    <tr>
-                        <td class="align-middle"><img src="../assets/img/product-1.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
-                        <td class="align-middle">$150</td>
+                    <tr v-for="product in products">
+                        <td class="align-middle"><img :src="product.image_url" alt="" style="width: 50px;">{{ product.title }}</td>
+                        <td class="align-middle">{{ '$' + product.price}}</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" >
+                                    <button @click="minusProductCount(product.id)" class="btn btn-sm btn-primary btn-minus" >
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
+                                <input type="text" class="form-control form-control-sm bg-secondary text-center" :value="product.qty">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
+                                    <button @click="plusProductCount(product.id)" class="btn btn-sm btn-primary btn-plus">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
                         </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img src="../assets/img/product-2.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img src="../assets/img/product-3.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img src="../assets/img/product-4.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img src="../assets/img/product-5.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                        <td class="align-middle">{{ product.price * product.qty }}</td>
+                        <td @click="removeProduct(product.id)" class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -164,7 +80,107 @@
 
 <script>
 export default {
-    name: "Cart"
+    name: "Cart",
+
+    data() {
+        return {
+            products: [],
+            cartProducts: [],
+        }
+    },
+
+    methods: {
+        removeProduct(id) {
+            for (let i = 0; i < this.products.length; i++) {
+                if (this.products[i].id === id) {
+                    this.products.splice(i, 1)
+                    break;
+                }
+            }
+
+            for (let i = 0; i < this.cartProducts.length; i++) {
+                if (this.cartProducts[i].id === id) {
+                    this.cartProducts.splice(i, 1)
+                    break;
+                }
+            }
+
+            localStorage.setItem('cart', JSON.stringify(this.cartProducts))
+
+            // update cart count in TopBar component
+            this.$parent.$parent.$refs.header.$refs.topBar.updateCartCount();
+        },
+
+        plusProductCount(id) {
+            this.products.forEach(product => {
+                if (product.id === id) {
+                    product.qty++;
+                }
+            })
+
+            this.cartProducts.forEach(cartProduct => {
+                if (cartProduct.id === id) {
+                    cartProduct.qty++;
+
+                    // increase cart count in TopBar component
+                    this.$parent.$parent.$refs.header.$refs.topBar.cartCount++;
+                }
+            })
+
+            localStorage.setItem('cart', JSON.stringify(this.cartProducts))
+        },
+
+        minusProductCount(id) {
+            this.products.forEach(product => {
+                if (product.id === id && product.qty > 1) {
+                    product.qty--;
+                }
+            })
+
+            this.cartProducts.forEach(cartProduct => {
+                if (cartProduct.id === id && cartProduct.qty > 1) {
+                    cartProduct.qty--;
+
+                    // decrease cart count in TopBar component
+                    this.$parent.$parent.$refs.header.$refs.topBar.cartCount--;
+                }
+            })
+
+            localStorage.setItem('cart', JSON.stringify(this.cartProducts))
+        },
+
+        getCartProducts() {
+            let IDs = []
+            this.cartProducts = localStorage.getItem('cart')
+            if (this.cartProducts) {
+                // collect all ID from cart storage
+                this.cartProducts = JSON.parse(this.cartProducts)
+                this.cartProducts.forEach(product => {
+                    IDs.push(product.id)
+                })
+                // get products from API by IDes
+                this.axios.post(`${this.domain}/api/v1/get-cart-products`, {
+                    'IDs': IDs
+                }).then(res => {
+                    this.products = res.data.data
+                    // add qty key to products from cart storage
+                    this.products.forEach(product => {
+                       this.cartProducts.forEach(cartProduct => {
+                           if (product.id === cartProduct.id) {
+                               product.qty = cartProduct.qty
+                           }
+                       })
+                   })
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
+        }
+    },
+
+    mounted() {
+        this.getCartProducts()
+    }
 }
 </script>
 

@@ -97,14 +97,9 @@ export default {
     methods: {
 
         addToCart(id) {
-
-            let newProduct = {
-                    id,
-                    qty: 1
-                }
-
-            let productsInCart = localStorage.getItem('cart')
+            let newProduct = {id, qty: 1}
             let needAddNewProduct = true
+            let productsInCart = localStorage.getItem('cart')
 
             if (productsInCart) {
                 productsInCart = JSON.parse(productsInCart)
@@ -125,7 +120,7 @@ export default {
                 localStorage.setItem('cart', JSON.stringify([newProduct]))
             }
 
-            // update count in cart in TopBar component
+            // update cart count in TopBar component
             this.$parent.$parent.$refs.header.$refs.topBar.updateCartCount();
         },
 
