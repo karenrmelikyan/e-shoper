@@ -16,7 +16,7 @@
                     <tbody class="align-middle">
                     <tr v-for="product in products">
                         <td class="align-middle"><img :src="product.image_url" alt="" style="width: 50px;">{{ product.title }}</td>
-                        <td class="align-middle">{{ '$' + product.price}}</td>
+                        <td class="align-middle">{{ `$${product.price}` }}</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="align-middle">{{ product.price * product.qty }}</td>
+                        <td class="align-middle">{{ `$${product.price * product.qty}` }}</td>
                         <td @click="removeProduct(product.id)" class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
                     </tr>
                     </tbody>

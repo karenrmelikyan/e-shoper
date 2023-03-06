@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\FilterController;
 use App\Http\Controllers\API\V1\ProductController;
 use Illuminate\Http\Request;
@@ -28,4 +29,9 @@ Route::prefix('v1')->group(function() {
 
     Route::get('/filter', [FilterController::class, 'index'])->name('filter.index');
     Route::post('/filter', [FilterController::class, 'getFiltered'])->name('filter.getFiltered');
+
+    Route::post('/register', [AuthController::class, 'registration'])->name('registration');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
+
+

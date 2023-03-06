@@ -39,12 +39,13 @@ class AuthController extends Controller
      * @param RegisterRequest $request
      * @return JsonResponse
      */
-    public function registration(RegisterRequest $request): JsonResponse
+    public function registration(RegisterRequest $request)//: JsonResponse
     {
-        $credentials = $request->validated();
-        $credentials['password'] = Hash::make($request->password);
+        $data = $request->validated();
+        $data['password'] = Hash::make($request->password);
+        $data['role'] = 'customer';
 
-        $user = User::create($credentials);
+        $user = User::create($data);
 
         $userResource = new AuthResource($user);
         $token = $user->createToken($user->name)->plainTextToken;

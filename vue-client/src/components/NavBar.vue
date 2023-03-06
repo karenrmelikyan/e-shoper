@@ -50,8 +50,8 @@
                             </div>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
+                            <router-link :to="'/login'" class="nav-item nav-link">Login</router-link>
+                            <router-link :to="'/register'" class="nav-item nav-link">Register</router-link>
                         </div>
                     </div>
                 </nav>
@@ -106,10 +106,12 @@ export default {
     data() {
         return {
             mainMenu: [
-                {title: 'Home', url: '/'},
-                {title: 'Shop', url: '/shop'},
-                {title: 'Contact', url: '/contact'},
+                { title: 'Home', url: '/' },
+                { title: 'Shop', url: '/shop' },
+                { title: 'Contact', url: '/contact' },
             ],
+
+
 
         }
     },
