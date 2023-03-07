@@ -77,7 +77,7 @@ export default {
     methods: {
 
          applyFilters()  {
-             this.axios.post(`${this.domain}/api/v1/filter`, {
+             this.axios.post(`${this.domain}/api/v1/filters`, {
                  'prices': this.prices,
                  'categories': this.categories,
                  'colors': this.colors,
@@ -91,7 +91,7 @@ export default {
          },
 
          getFilterList() {
-             this.axios.get(`${this.domain}/api/v1/filter`)
+             this.axios.get(`${this.domain}/api/v1/filters`)
                  .then(res => {
                      this.filterList = res.data
                  }).catch(err => {
@@ -105,7 +105,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -133,7 +133,8 @@ class ProductController extends Controller
         $colorsIds = $data['colors'];
         unset($data['colors']);
 
-        // sync method useful during update
+        // update of tables linked with
+        // each other via many-to-many relation
         $product->tags()->sync($tagIDs);
         $product->colors()->sync($colorsIds);
 
@@ -155,11 +156,12 @@ class ProductController extends Controller
 //            echo $tag->pivot->tag_id;
 //        }
 
-        // delete restrictions before removing
+        // delete restrictions between
+        // many-to-many tables before removing
         $product->tags()->detach();
         $product->colors()->detach();
 
-        // remove
+        // remove product
         $product->delete();
 
         return redirect()->route('product.index');

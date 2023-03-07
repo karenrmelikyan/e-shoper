@@ -17,7 +17,7 @@ class ProductController extends Controller
         return ProductResource::collection($allProducts);
     }
 
-    public function detail(int $productID): ProductResource
+    public function getProductDetails(int $productID): ProductResource
     {
         $product = Product::find($productID);
 

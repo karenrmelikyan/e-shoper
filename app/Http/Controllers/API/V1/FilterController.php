@@ -46,14 +46,14 @@ class FilterController extends Controller
         $productsByColors = $productFilter->getByColors($data['colors']);
         $productsByTags = $productFilter->getByTags($data['tags']);
 
-        // merge all collections for sorting by unique
+        // merge all collections for sorting as unique
         $uniqueCollection = $productsByPricesRange
             ->merge($productsByCategories)
             ->merge($productsByColors)
             ->merge($productsByTags)
             ->unique();
 
-        // if was not selected any filter, return all products
+        // if no filter is selected, return all products
         if ($uniqueCollection->isEmpty()) {
             return ProductResource::collection(Product::all());
         }
