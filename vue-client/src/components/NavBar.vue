@@ -49,10 +49,15 @@
                                 <router-link :to="menu.url" class="nav-item nav-link active">{{ menu.title }}</router-link>
                             </div>
                         </div>
-                        <div class="navbar-nav ml-auto py-0">
+                        <!-- account/login/register start -->
+                        <div v-if="this.$store.state.user" class="navbar-nav ml-auto py-0">
+                            <router-link :to="'/'" class="nav-item nav-link">{{ this.$store.state.user.name }}</router-link>
+                        </div>
+                        <div v-else class="navbar-nav ml-auto py-0">
                             <router-link :to="'/login'" class="nav-item nav-link">Login</router-link>
                             <router-link :to="'/register'" class="nav-item nav-link">Register</router-link>
                         </div>
+                        <!-- account/login/register finish -->
                     </div>
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
@@ -110,15 +115,20 @@ export default {
                 { title: 'Shop', url: '/shop' },
                 { title: 'Contact', url: '/contact' },
             ],
-
-
-
         }
     },
 
+    mounted() {
+        const jwt = localStorage.getItem('jwt')
+        if (jwt) {
+            this.$store.commit('updateUserByToken', {
+                'token': jwt,
+                'axios': this.axios,
+                'domain': this.domain
+            })
+        }
+
+    }
 }
 </script>
 
-<style scoped>
-
-</style>

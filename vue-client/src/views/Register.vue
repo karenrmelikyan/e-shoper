@@ -55,7 +55,7 @@ export default {
             } else if(!this.password_confirm) {
                 this.dangerMessage = 'Confirm password field cannot be empty'
             } else if(this.password_confirm !== this.password) {
-                this.dangerMessage = 'The password is not confirmed'
+                this.dangerMessage = 'Password is not confirmed'
             } else {
                 this.dangerMessage = ''
                 this.axios.post(`${this.domain}/api/v1/register`, {
@@ -63,8 +63,9 @@ export default {
                     email: this.email,
                     password: this.password,
                 }).then(res => {
-                    this.$store.commit('saveUser', {'id': res.data.user.id, 'name': res.data.user.name, 'token': res.data.token})
-                    //this.$router.push({path: '/account'})
+                    localStorage.setItem('jwt', res.data.token)
+                    this.$store.commit('setUser', res.data.user)
+                    this.$router.push({path: '/'})
                 }).catch(err => {
                     this.dangerMessage = 'Something went wrong! Try again please'
                     console.log(err)

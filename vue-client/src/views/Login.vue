@@ -49,8 +49,9 @@ export default {
                     email: this.email,
                     password: this.password,
                 }).then(res => {
-                   this.$store.commit('saveUser', {'id': res.data.user.id, 'name': res.data.user.name, 'token': res.data.token})
-                   //this.$router.push({path: '/account'})
+                    localStorage.setItem('jwt', res.data.token)
+                    this.$store.commit('setUser', res.data.user)
+                    this.$router.push({path: '/'})
                 }).catch(err => {
                     this.dangerMessage = 'Your email or password probably wrong'
                     console.log(err)

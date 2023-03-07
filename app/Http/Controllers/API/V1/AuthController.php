@@ -39,7 +39,7 @@ class AuthController extends Controller
      * @param RegisterRequest $request
      * @return JsonResponse
      */
-    public function registration(RegisterRequest $request)//: JsonResponse
+    public function registration(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
         $data['password'] = Hash::make($request->password);
@@ -57,7 +57,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function authChecking(Request $request): JsonResponse
+    public function jwtChecking(Request $request)//: JsonResponse
     {
         $token = $request->bearerToken();
         $user = PersonalAccessToken::findToken($token)->tokenable;

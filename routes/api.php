@@ -23,15 +23,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::prefix('v1')->group(function() {
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/products/{id}', [ProductController::class, 'detail'])->name('products.detail');
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{id}', [ProductController::class, 'detail']);
     Route::post('/get-cart-products', [ProductController::class, 'getCartProducts']);
 
-    Route::get('/filter', [FilterController::class, 'index'])->name('filter.index');
-    Route::post('/filter', [FilterController::class, 'getFiltered'])->name('filter.getFiltered');
+    Route::get('/filter', [FilterController::class, 'index']);
+    Route::post('/filter', [FilterController::class, 'getFiltered']);
 
-    Route::post('/register', [AuthController::class, 'registration'])->name('registration');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/register', [AuthController::class, 'registration']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/jwt-checking', [AuthController::class, 'jwtChecking']);
 });
 
 
