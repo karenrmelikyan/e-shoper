@@ -7,9 +7,7 @@ const store = createStore({
         }
     },
 
-
     mutations: {
-
         setUser(state, payload) {
             this.state.user = payload
         },

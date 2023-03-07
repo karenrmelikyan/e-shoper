@@ -51,7 +51,14 @@
                         </div>
                         <!-- account/login/register start -->
                         <div v-if="this.$store.state.user" class="navbar-nav ml-auto py-0">
-                            <router-link :to="'/'" class="nav-item nav-link">{{ this.$store.state.user.name }}</router-link>
+                            <div class="nav-item dropdown">
+                                <div class="nav-link" data-toggle="dropdown">{{ this.$store.state.user.name }}
+                                    <p class="fa fa-angle-down float-right mt-1"></p>
+                                </div>
+                                <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                    <button @click.prevent="logout" class="dropdown-item">logout</button>
+                                </div>
+                            </div>
                         </div>
                         <div v-else class="navbar-nav ml-auto py-0">
                             <router-link :to="'/login'" class="nav-item nav-link">Login</router-link>
@@ -103,8 +110,6 @@
 </template>
 
 <script>
-import { useRoute } from 'vue-router'
-
 export default {
     name: "NavBar",
 
@@ -118,6 +123,14 @@ export default {
         }
     },
 
+    methods: {
+        logout() {
+            localStorage.setItem('jwt', '')
+            this.$store.commit('setUser', undefined)
+            this.$router.push({path: '/'})
+        }
+    },
+
     mounted() {
         const jwt = localStorage.getItem('jwt')
         if (jwt) {
@@ -127,7 +140,6 @@ export default {
                 'domain': this.domain
             })
         }
-
     }
 }
 </script>
