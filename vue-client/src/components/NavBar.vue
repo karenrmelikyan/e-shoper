@@ -53,7 +53,7 @@
                         <div v-if="this.$store.state.user" class="navbar-nav ml-auto py-0">
                             <div class="nav-item dropdown">
                                 <div class="nav-link" data-toggle="dropdown">{{ this.$store.state.user.name }}
-                                    <p class="fa fa-angle-down float-right mt-1"></p>
+                                    <p class="fa fa-angle-down float-right py-1 px-2"></p>
                                 </div>
                                 <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                     <button @click.prevent="logout" class="dropdown-item">logout</button>
@@ -61,8 +61,8 @@
                             </div>
                         </div>
                         <div v-else class="navbar-nav ml-auto py-0">
-                            <router-link :to="'/login'" class="nav-item nav-link">Login</router-link>
-                            <router-link :to="'/register'" class="nav-item nav-link">Register</router-link>
+                            <a href="" @click.prevent="login" class="nav-item nav-link">Login</a>
+                            <a href=""  @click.prevent="register" class="nav-item nav-link">Register</a>
                         </div>
                         <!-- account/login/register finish -->
                     </div>
@@ -124,6 +124,16 @@ export default {
     },
 
     methods: {
+        register() {
+            this.$store.commit('setPreviewsPath', {'path': this.$route.path})
+            this.$router.push({'path': '/register'})
+        },
+
+        login() {
+            this.$store.commit('setPreviewsPath', {'path': this.$route.path})
+            this.$router.push({'path': '/login'})
+        },
+
         logout() {
             localStorage.setItem('jwt', '')
             this.$store.commit('setUser', undefined)

@@ -188,10 +188,32 @@
 
 <script>
 export default {
-    name: "Checkout"
+    name: "Checkout",
+
+    data() {
+        return {
+
+        }
+    },
+
+    methods: {
+        checkUserAuth() {
+            const jwt = localStorage.getItem('jwt')
+            if (jwt) {
+                this.$store.commit('updateUserByToken', {
+                    'token': jwt,
+                    'axios': this.axios,
+                    'domain': this.domain
+                })
+            } else {
+                this.$store.commit('setPreviewsPath', {'path': '/checkout'})
+                this.$router.push({'path': '/login'})
+            }
+        }
+    },
+
+    mounted() {
+        this.checkUserAuth()
+    }
 }
 </script>
-
-<style scoped>
-
-</style>

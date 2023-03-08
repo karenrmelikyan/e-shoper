@@ -3,11 +3,16 @@ import {createStore} from 'vuex'
 const store = createStore({
     state() {
         return {
-            user: undefined
+            user: undefined,
+            previewsPath: undefined,
         }
     },
 
     mutations: {
+        setPreviewsPath(state, payload) {
+            this.state.previewsPath = payload.path
+        },
+
         setUser(state, payload) {
             this.state.user = payload
         },

@@ -25,6 +25,7 @@
                 <div>
                     <p class="help-block text-danger">{{ dangerMessage }}</p>
                     <button @click.prevent="registration" class="btn btn-primary py-2 px-4" >Registration</button>
+                    <router-link to="/login" class="py-2 px-4">Login</router-link>
                 </div>
             </div>
         </div>
@@ -65,9 +66,9 @@ export default {
                 }).then(res => {
                     localStorage.setItem('jwt', res.data.token)
                     this.$store.commit('setUser', res.data.user)
-                    this.$router.push({path: '/'})
+                    this.$router.push({path: this.$store.state.previewsPath})
                 }).catch(err => {
-                    this.dangerMessage = 'Something went wrong! Try again please'
+                    this.dangerMessage = 'Something went wrong! Please try again'
                     console.log(err)
                 })
             }

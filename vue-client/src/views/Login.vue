@@ -18,6 +18,7 @@
                 <div>
                     <p class="help-block text-danger">{{ dangerMessage }}</p>
                     <button @click.prevent="login" class="btn btn-primary py-2 px-4">Login</button>
+                    <router-link to="/register" class="py-2 px-4">Registration</router-link>
                 </div>
             </form>
         </div>
@@ -39,6 +40,7 @@ export default {
 
     methods: {
         login() {
+            console.log(this.$store.state.previewsPath);
             if (!this.email) {
                 this.dangerMessage = 'Email field cannot be empty'
             } else if(!this.password) {
@@ -51,7 +53,7 @@ export default {
                 }).then(res => {
                     localStorage.setItem('jwt', res.data.token)
                     this.$store.commit('setUser', res.data.user)
-                    this.$router.push({path: '/'})
+                    this.$router.push({path: this.$store.state.previewsPath})
                 }).catch(err => {
                     this.dangerMessage = 'Your email or password probably wrong'
                     console.log(err)
