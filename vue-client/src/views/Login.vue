@@ -40,7 +40,6 @@ export default {
 
     methods: {
         login() {
-            console.log(this.$store.state.previewsPath);
             if (!this.email) {
                 this.dangerMessage = 'Email field cannot be empty'
             } else if(!this.password) {

@@ -123,22 +123,14 @@
                     </div>
                     <div class="card-body">
                         <h5 class="font-weight-medium mb-3">Products</h5>
-                        <div class="d-flex justify-content-between">
-                            <p>Colorful Stylish Shirt 1</p>
-                            <p>$150</p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p>Colorful Stylish Shirt 2</p>
-                            <p>$150</p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p>Colorful Stylish Shirt 3</p>
-                            <p>$150</p>
+                        <div v-for="product in products" class="d-flex justify-content-between">
+                            <p>{{ product.title }}</p>
+                            <p>{{ product.price * product.qty}}</p>
                         </div>
                         <hr class="mt-0">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">$150</h6>
+                            <h6 class="font-weight-medium">{{ `$${this.subTotalPrice}` }}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
@@ -148,7 +140,7 @@
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">$160</h5>
+                            <h5 class="font-weight-bold">{{ `$${this.subTotalPrice + 10}`}}</h5>
                         </div>
                     </div>
                 </div>
@@ -166,13 +158,7 @@
                         <div class="form-group">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-                                <label class="custom-control-label" for="directcheck">Direct Check</label>
-                            </div>
-                        </div>
-                        <div class="">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
-                                <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
+                                <label class="custom-control-label" for="directcheck">Stripe</label>
                             </div>
                         </div>
                     </div>
@@ -192,11 +178,51 @@ export default {
 
     data() {
         return {
-
+            products: [],
+            cartProducts: [],
         }
     },
 
+    computed: {
+        subTotalPrice() {
+            let subTotal = 0
+            this.products.forEach(product => {
+                subTotal += product.price * product.qty
+            })
+            return subTotal
+        },
+    },
+
     methods: {
+
+        getCartProducts() {
+            let IDs = []
+            this.cartProducts = localStorage.getItem('cart')
+            if (this.cartProducts) {
+                // collect all ID from cart storage
+                this.cartProducts = JSON.parse(this.cartProducts)
+                this.cartProducts.forEach(product => {
+                    IDs.push(product.id)
+                })
+                // get products from API by IDes
+                this.axios.post(`${this.domain}/api/v1/get-cart-products`, {
+                    'IDs': IDs
+                }).then(res => {
+                    this.products = res.data.data
+                    // add qty key to products from cart storage
+                    this.products.forEach(product => {
+                        this.cartProducts.forEach(cartProduct => {
+                            if (product.id === cartProduct.id) {
+                                product.qty = cartProduct.qty
+                            }
+                        })
+                    })
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
+        },
+
         checkUserAuth() {
             const jwt = localStorage.getItem('jwt')
             if (jwt) {
@@ -213,6 +239,7 @@ export default {
     },
 
     mounted() {
+        this.getCartProducts()
         this.checkUserAuth()
     }
 }

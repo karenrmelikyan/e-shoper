@@ -13,15 +13,6 @@
                     class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
                     id="navbar-vertical">
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i
-                                class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">Men's Dresses</a>
-                                <a href="" class="dropdown-item">Women's Dresses</a>
-                                <a href="" class="dropdown-item">Baby's Dresses</a>
-                            </div>
-                        </div>
                         <a href="" class="nav-item nav-link">Shirts</a>
                         <a href="" class="nav-item nav-link">Jeans</a>
                         <a href="" class="nav-item nav-link">Swimwear</a>
@@ -46,7 +37,7 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <div v-for="menu in mainMenu">
-                                <router-link :to="menu.url" class="nav-item nav-link active">{{ menu.title }}</router-link>
+                                <router-link :to="menu.uri" :class="{ active: this.$route.path === menu.uri }" class="nav-item nav-link">{{ menu.title }}</router-link>
                             </div>
                         </div>
                         <!-- account/login/register start -->
@@ -116,20 +107,22 @@ export default {
     data() {
         return {
             mainMenu: [
-                { title: 'Home', url: '/' },
-                { title: 'Shop', url: '/shop' },
-                { title: 'Contact', url: '/contact' },
+                { title: 'Home', uri: '/' },
+                { title: 'Shop', uri: '/shop' },
+                { title: 'Contact', uri: '/contact' },
             ],
         }
     },
 
     methods: {
         register() {
+            // save previews path and redirect to register page
             this.$store.commit('setPreviewsPath', {'path': this.$route.path})
             this.$router.push({'path': '/register'})
         },
 
         login() {
+            // save previews path and redirect to login page
             this.$store.commit('setPreviewsPath', {'path': this.$route.path})
             this.$router.push({'path': '/login'})
         },
