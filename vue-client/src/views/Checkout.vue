@@ -8,114 +8,42 @@
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John">
+                            <input v-model="first_name" class="form-control" type="text" placeholder="John">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe">
+                            <input v-model="last_name" class="form-control" type="text" placeholder="Doe">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com">
+                            <input v-model="email" class="form-control" type="text" placeholder="example@email.com">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789">
+                            <input v-model="mobile" class="form-control" type="text" placeholder="+123 456 789">
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 2</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
+
                         <div class="col-md-6 form-group">
                             <label>Country</label>
-                            <select class="custom-select">
-                                <option selected>United States</option>
+                            <select v-model="country" class="custom-select">
+                                <option selected>{{ country }}</option>
                                 <option>Afghanistan</option>
                                 <option>Albania</option>
                                 <option>Algeria</option>
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>State</label>
-                            <input class="form-control" type="text" placeholder="New York">
+                            <label>Address</label>
+                            <input v-model="address" class="form-control" type="text" placeholder="123 Street">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="newaccount">
-                                <label class="custom-control-label" for="newaccount">Create an account</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="shipto">
-                                <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="collapse mb-4" id="shipping-address">
-                    <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 2</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Country</label>
-                            <select class="custom-select">
-                                <option selected>United States</option>
-                                <option>Afghanistan</option>
-                                <option>Albania</option>
-                                <option>Algeria</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>State</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123">
+                            <input v-model="zip_code" class="form-control" type="text" placeholder="123">
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-4">
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
@@ -163,7 +91,8 @@
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                        <p class="help-block text-danger">{{ dangerMessage }}</p>
+                        <button @click.prevent="order" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
                     </div>
                 </div>
             </div>
@@ -178,8 +107,17 @@ export default {
 
     data() {
         return {
-            products: [],
+            first_name: '',
+            last_name: '',
+            email: '',
+            mobile: '',
+            country: '',
+            address: '',
+            zip_code: '',
+            dangerMessage: '',
+
             cartProducts: [],
+            products: [],
         }
     },
 
@@ -194,6 +132,50 @@ export default {
     },
 
     methods: {
+        fillFormFields() {
+                this.first_name = this.$store.state.user?.name
+                this.last_name = this.$store.state.user?.surname
+                this.email = this.$store.state.user?.email
+                this.mobile = this.$store.state.user?.mobile
+                this.country = this.$store.state.user?.country
+                this.address = this.$store.state.user?.address
+                this.zip_code = this.$store.state.user?.zip_code
+        },
+
+        order() {
+            if (!this.first_name) {
+                this.dangerMessage = 'First name field cannot be empty'
+            } else if(!this.last_name) {
+                this.dangerMessage = 'Last name field cannot be empty'
+            } else if(!this.email) {
+                this.dangerMessage = 'Email field cannot be empty'
+            } else if(!this.mobile) {
+                this.dangerMessage = 'Mobile field cannot be empty'
+            } else if(!this.country) {
+                this.dangerMessage = 'Country field cannot be empty'
+            } else if(!this.address) {
+                this.dangerMessage = 'Address field cannot be empty'
+            } else if(!this.zip_code) {
+                this.dangerMessage = 'Zip code field cannot be empty'
+            } else {
+                 this.dangerMessage = ''
+                this.axios.post(`${this.domain}/api/v1/order-dispatch`, {
+                    name: this.first_name,
+                    surname: this.last_name,
+                    email: this.email,
+                    mobile: this.mobile,
+                    country: this.country,
+                    address: this.address,
+                    zip_code: this.zip_code,
+                    products: this.products,
+                }).then(res => {
+
+                }).catch(err => {
+                    this.dangerMessage = 'Something went wrong! Please try again'
+                    console.log(err)
+                })
+            }
+        },
 
         getCartProducts() {
             let IDs = []
@@ -239,8 +221,9 @@ export default {
     },
 
     mounted() {
-        this.getCartProducts()
         this.checkUserAuth()
+        this.getCartProducts()
+        this.fillFormFields()
     }
 }
 </script>

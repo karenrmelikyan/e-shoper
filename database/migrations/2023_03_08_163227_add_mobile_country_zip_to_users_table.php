@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role');
+        Schema::table('users', static function (Blueprint $table) {
+            $table->string('mobile')->nullable();
+            $table->string('country')->nullable();
+            $table->string('zip_code')->nullable();
         });
     }
 

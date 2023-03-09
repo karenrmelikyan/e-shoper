@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role');
+        Schema::create('orders', static function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->index()->constrained('users');
+            $table->jsonb('products');
+            $table->decimal('total_price');
+            $table->boolean('payment_status')->default(false);
+            $table->timestamps();
         });
     }
 
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-
+        Schema::dropIfExists('orders');
     }
 };

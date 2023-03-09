@@ -17,11 +17,14 @@ class AuthResource extends JsonResource
         return [
             //'id' => $this->id,
             'name' => $this->name,
-            //'surname' => $this->surname,
+            'surname' => $this->surname,
             //'age' => $this->age,
-            //'address' => $this->address,
-            //'email' => $this->email,
+            'address' => $this->address,
+            'email' => $this->email,
             //'role' => $this->role,
+            'mobile' => $this->mobile,
+            'country' => $this->country,
+            'zip_code' => $this->zip_code,
         ];
     }
 }
