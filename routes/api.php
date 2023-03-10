@@ -18,24 +18,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::prefix('v1')->group(function() {
+    // products
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'getProductDetails']);
     Route::post('/get-cart-products', [ProductController::class, 'getCartProducts']);
 
+    // product filters
     Route::get('/filters', [FilterController::class, 'index']);
     Route::post('/filters', [FilterController::class, 'getFiltered']);
 
+    // authorization
     Route::post('/register', [AuthController::class, 'registration']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/jwt-checking', [AuthController::class, 'jwtChecking']);
 
+    // product's checkout order
     Route::post('/order-dispatch', [OrderController::class, 'orderDispatch']);
 });
-
 
