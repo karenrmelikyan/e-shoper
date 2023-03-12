@@ -50,6 +50,12 @@ const router = createRouter({
             name: 'product',
             component: () => import('../views/Product.vue')
         },
+
+        {
+            path: '/stripe',
+            name: 'stripe',
+            component: () => import('../views/CheckoutForm.vue')
+        },
     ]
 })
 

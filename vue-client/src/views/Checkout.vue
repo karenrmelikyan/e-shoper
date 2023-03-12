@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import * as stripe from "stripe";
+
 export default {
     name: "Checkout",
 
@@ -132,16 +134,6 @@ export default {
     },
 
     methods: {
-        fillFormFields() {
-                this.first_name = this.$store.state.user?.name
-                this.last_name = this.$store.state.user?.surname
-                this.email = this.$store.state.user?.email
-                this.mobile = this.$store.state.user?.mobile
-                this.country = this.$store.state.user?.country
-                this.address = this.$store.state.user?.address
-                this.zip_code = this.$store.state.user?.zip_code
-        },
-
         order() {
             if (!this.first_name) {
                 this.dangerMessage = 'First name field cannot be empty'
@@ -159,7 +151,7 @@ export default {
                 this.dangerMessage = 'Zip code field cannot be empty'
             } else {
                  this.dangerMessage = ''
-                this.axios.post(`${this.domain}/api/v1/order-dispatch`, {
+                this.axios.post(`${this.domain}/api/v1/order-create`, {
                     name: this.first_name,
                     surname: this.last_name,
                     email: this.email,
@@ -169,7 +161,13 @@ export default {
                     zip_code: this.zip_code,
                     products: this.products,
                 }).then(res => {
-
+                    // After setting the webhook endpoint in the Stripe
+                    // account, uncomment the rows bellow
+                    //
+                    // const sessionID = res.data.id
+                    // stripe.redirectToCheckout({
+                    //     sessionId: sessionID,
+                    // });
                 }).catch(err => {
                     this.dangerMessage = 'Something went wrong! Please try again'
                     console.log(err)
@@ -217,7 +215,18 @@ export default {
                 this.$store.commit('setPreviewsPath', {'path': '/checkout'})
                 this.$router.push({'path': '/login'})
             }
-        }
+        },
+
+        fillFormFields() {
+            this.first_name = this.$store.state.user?.name
+            this.last_name = this.$store.state.user?.surname
+            this.email = this.$store.state.user?.email
+            this.mobile = this.$store.state.user?.mobile
+            this.country = this.$store.state.user?.country
+            this.address = this.$store.state.user?.address
+            this.zip_code = this.$store.state.user?.zip_code
+        },
+
     },
 
     mounted() {

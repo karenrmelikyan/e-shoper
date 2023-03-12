@@ -24,7 +24,7 @@ Route::prefix('v1')->group(function() {
     Route::get('/products/{id}', [ProductController::class, 'getProductDetails']);
     Route::post('/get-cart-products', [ProductController::class, 'getCartProducts']);
 
-    // product filters
+    // product filtration
     Route::get('/filters', [FilterController::class, 'index']);
     Route::post('/filters', [FilterController::class, 'getFiltered']);
 
@@ -34,6 +34,8 @@ Route::prefix('v1')->group(function() {
     Route::post('/jwt-checking', [AuthController::class, 'jwtChecking']);
 
     // product's checkout order
-    Route::post('/order-dispatch', [OrderController::class, 'orderDispatch']);
+    Route::post('/order-create', [OrderController::class, 'orderCreate']);
+    Route::get('/stripe/success', [OrderController::class, 'paymentSuccess']);
+    Route::get('/stripe/cancel', [OrderController::class, 'paymentCancel']);
 });
 
