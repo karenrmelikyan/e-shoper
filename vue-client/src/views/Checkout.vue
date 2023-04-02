@@ -226,12 +226,14 @@ export default {
             this.address = this.$store.state.user?.address
             this.zip_code = this.$store.state.user?.zip_code
         },
+    },
 
+    created() {
+        this.checkUserAuth()
+        this.getCartProducts()
     },
 
     mounted() {
-        this.checkUserAuth()
-        this.getCartProducts()
         this.fillFormFields()
     }
 }

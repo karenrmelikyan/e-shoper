@@ -179,9 +179,9 @@ export default {
         }
     },
 
-    mounted() {
+    created() {
         this.getCartProducts()
-    }
+    },
 }
 </script>
 

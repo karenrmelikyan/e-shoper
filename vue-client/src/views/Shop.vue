@@ -138,9 +138,9 @@ export default {
         }
     },
 
-    mounted() {
-       this.getShopItems()
-    }
+    created() {
+        this.getShopItems()
+    },
 }
 </script>
 

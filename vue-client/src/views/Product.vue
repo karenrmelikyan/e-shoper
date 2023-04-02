@@ -266,9 +266,9 @@ export default {
         }
     },
 
-    mounted() {
+    created() {
         this.getItem(this.id)
-    }
+    },
 }
 </script>
 
