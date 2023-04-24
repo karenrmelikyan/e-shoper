@@ -55,29 +55,35 @@ class ProductController extends Controller
      */
     public function store(StoreRequest $request): RedirectResponse
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        // save picture to storage & get path to it
-        $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
+            // save picture to storage & get path to it
+            $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
 
-        // remove extra data "tags" from data
-        $tagIDs = $data['tags'];
-        unset($data['tags']);
+            // remove extra data "tags" from data
+            $tagIDs = $data['tags'];
+            unset($data['tags']);
 
-        // remove extra data colors from data
-        $colorIDs = $data['colors'];
-        unset($data['colors']);
+            // remove extra data colors from data
+            $colorIDs = $data['colors'];
+            unset($data['colors']);
 
-        // create new product
-        $product = Product::firstOrCreate($data);
+            // create new product
+            $product = Product::firstOrCreate($data);
 
-        // set correct tag's IDs
-        $product->tags()->attach($tagIDs);
+            // set correct tag's IDs
+            $product->tags()->attach($tagIDs);
 
-        // set correct colors IDs
-        $product->colors()->attach($colorIDs);
+            // set correct colors IDs
+            $product->colors()->attach($colorIDs);
 
-        return redirect()->route('product.index');
+            return redirect()->route('product.index');
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            abort(404);
+        }
     }
 
     /**
