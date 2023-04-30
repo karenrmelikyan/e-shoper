@@ -25,6 +25,10 @@
                     <span class="badge">{{ cartCount }}</span>
                 </router-link>
             </div>
+
+            <button @click="test">
+                click me
+            </button>
         </div>
     </div>
     <!-- Topbar End -->
@@ -37,10 +41,23 @@ export default {
     data() {
         return {
             cartCount: 0,
+            collection: [],
         }
     },
 
     methods: {
+        test() {
+            this.axios.get(`${this.domain}/api/v1/test`).then(res => {
+                this.collection = res.data
+
+                this.collection.forEach(category => {
+                    category.products.forEach(product => {
+                        console.log(product)
+                    })
+                })
+
+            })
+        },
         updateCartCount() {
             this.cartCount = 0
             let productsInCart = localStorage.getItem('cart')

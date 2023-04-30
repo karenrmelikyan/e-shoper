@@ -7,9 +7,6 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
-use App\Models\Subcategory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Admin routes
-Route::middleware(['auth', 'check.user.role'])->group(function() {
+Route::middleware(['auth', 'check.user.role'])->group(static function() {
     Route::get('/', DashboardController::class)->name('main.index');
     Route::resource('category', CategoryController::class);
     Route::resource('color', ColorController::class);
@@ -38,31 +35,3 @@ Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
 
-Route::get('/add-sub', function (Request $request) {
-    try {
-        $data = $request->all();
-        $data['category_id'] = 1;
-
-        $sub = Subcategory::create($data);
-        $sub->products()->attach([1, 2, 3]);
-
-        return 'Product '. $sub->title . ' was added';
-
-    } catch (Exception $e) {
-        return $e->getMessage();
-    }
-});
-
-
-Route::get('/delete-sub/{id}', function ($id) {
-    try {
-        $sub = Subcategory::findOrFail($id);
-        $sub?->products()->detach();
-        $sub?->delete();
-
-        return 'Product '. $sub->title . ' was removed';
-
-    } catch (Exception $e) {
-        Log::error($e->getMessage());
-    }
-});

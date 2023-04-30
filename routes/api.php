@@ -4,6 +4,7 @@ use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\FilterController;
 use App\Http\Controllers\API\V1\OrderController;
 use App\Http\Controllers\API\V1\ProductController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,5 +38,12 @@ Route::prefix('v1')->group(function() {
     Route::post('/order-create', [OrderController::class, 'orderCreate']);
     Route::get('/stripe/success', [OrderController::class, 'paymentSuccess']);
     Route::get('/stripe/cancel', [OrderController::class, 'paymentCancel']);
+
+
+    Route::get('/test', function() {
+        $data = Category::with('products')->get();
+        return response()->json($data);
+    });
+
 });
 
