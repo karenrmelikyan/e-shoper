@@ -5,6 +5,7 @@ const store = createStore({
         return {
             user: undefined,
             previewsPath: undefined,
+            categoryProducts: [],
         }
     },
 
@@ -25,6 +26,10 @@ const store = createStore({
                 }).catch(err => {
                 console.log((err))
             })
+        },
+
+        setCategoryProducts(state, payload) {
+            this.state.categoryProducts = payload
         }
     },
 })

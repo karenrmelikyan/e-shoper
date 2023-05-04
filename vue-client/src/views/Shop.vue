@@ -138,9 +138,22 @@ export default {
         }
     },
 
+    computed: {
+        categoryProducts() {
+            return this.$store.state.categoryProducts;
+        }
+    },
+
     created() {
         this.getShopItems()
+        this.$store.watch(
+            state => state.categoryProducts,
+            (newVal, oldVal) => {
+                this.products = newVal;
+            }
+        );
     },
+
 }
 </script>
 

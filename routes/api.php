@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\FilterController;
 use App\Http\Controllers\API\V1\OrderController;
 use App\Http\Controllers\API\V1\ProductController;
@@ -20,10 +21,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function() {
+
+    // categories
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/categories/{id}', [CategoryController::class, 'getAllProductsOfCategory']);
+
     // products
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'getProductDetails']);
     Route::post('/get-cart-products', [ProductController::class, 'getCartProducts']);
+    Route::get('/products/category/{id}', [ProductController::class, 'getProductsByCategoryID']);
 
     // product filtration
     Route::get('/filters', [FilterController::class, 'index']);
@@ -38,12 +45,4 @@ Route::prefix('v1')->group(function() {
     Route::post('/order-create', [OrderController::class, 'orderCreate']);
     Route::get('/stripe/success', [OrderController::class, 'paymentSuccess']);
     Route::get('/stripe/cancel', [OrderController::class, 'paymentCancel']);
-
-
-    Route::get('/test', function() {
-        $data = Category::with('products')->get();
-        return response()->json($data);
-    });
-
 });
-

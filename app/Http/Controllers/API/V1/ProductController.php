@@ -30,4 +30,11 @@ class ProductController extends Controller
 
         return ProductResource::collection($cartProducts);
     }
+
+    public function getProductsByCategoryID(int $id)
+    {
+        $products = Product::where('category_id', $id)->get();
+
+        return ProductResource::collection($products);
+    }
 }

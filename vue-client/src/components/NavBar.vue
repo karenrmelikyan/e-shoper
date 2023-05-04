@@ -9,21 +9,15 @@
                     <h6 class="m-0">Categories</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
-                <nav
-                    class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
-                    id="navbar-vertical">
+               <!-- Categories -->
+                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                        <a href="" class="nav-item nav-link">Shirts</a>
-                        <a href="" class="nav-item nav-link">Jeans</a>
-                        <a href="" class="nav-item nav-link">Swimwear</a>
-                        <a href="" class="nav-item nav-link">Sleepwear</a>
-                        <a href="" class="nav-item nav-link">Sportswear</a>
-                        <a href="" class="nav-item nav-link">Jumpsuits</a>
-                        <a href="" class="nav-item nav-link">Blazers</a>
-                        <a href="" class="nav-item nav-link">Jackets</a>
-                        <a href="" class="nav-item nav-link">Shoes</a>
+                        <div v-for="category in categories" >
+                            <a href="" @click.prevent="setCategoryProducts(category.id)" class="nav-item nav-link">{{ category.title }}</a>
+                        </div>
                     </div>
                 </nav>
+                <!-- / Categories -->
             </div>
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
@@ -37,7 +31,13 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <div v-for="menu in mainMenu">
-                                <router-link :to="menu.uri" :class="{ active: this.$route.path === menu.uri }" class="nav-item nav-link">{{ menu.title }}</router-link>
+                                <router-link
+                                    :to="menu.uri"
+                                    :class="{ active: this.$route.path === menu.uri }"
+                                    class="nav-item nav-link"
+                                >
+                                    {{ menu.title }}
+                                </router-link>
                             </div>
                         </div>
                         <!-- account/login/register start -->
@@ -111,6 +111,8 @@ export default {
                 { title: 'Shop', uri: '/shop' },
                 { title: 'Contact', uri: '/contact' },
             ],
+
+            categories: [],
         }
     },
 
@@ -131,7 +133,25 @@ export default {
             localStorage.setItem('jwt', '')
             this.$store.commit('setUser', undefined)
             this.$router.push({path: '/'})
+        },
+
+        setCategoryProducts(categoryID) {
+            this.axios.get(`${this.domain}/api/v1/products/category/${categoryID}`)
+                .then(res => {
+                    this.$store.commit('setCategoryProducts', res.data.data)
+                }).catch(err => {
+                console.log(err.message)
+            })
         }
+    },
+
+    created() {
+        this.axios.get(`${this.domain}/api/v1/categories`)
+            .then(res => {
+                this.categories = res.data
+            }).catch(err => {
+            console.log(err.message)
+        })
     },
 
     mounted() {
