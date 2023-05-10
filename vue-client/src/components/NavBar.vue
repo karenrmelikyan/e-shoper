@@ -1,5 +1,5 @@
 <template>
-    <!-- Navbar Start -->
+    <!-- Navbar -->
     <div class="container-fluid mb-5">
         <div class="row border-top px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
@@ -13,7 +13,11 @@
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
                         <div v-for="category in categories" >
-                            <a href="" @click.prevent="setCategoryProducts(category.id)" class="nav-item nav-link">{{ category.title }}</a>
+                            <a href="" @click.prevent="setCategoryProducts(category.id)"
+                               :class="{ active: chosenCategoryID === category.id }"
+                               class="nav-item nav-link">
+                                {{ category.title }}
+                            </a>
                         </div>
                     </div>
                 </nav>
@@ -29,6 +33,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <!-- Menu -->
                         <div class="navbar-nav mr-auto py-0">
                             <div v-for="menu in mainMenu">
                                 <router-link
@@ -40,7 +45,8 @@
                                 </router-link>
                             </div>
                         </div>
-                        <!-- account/login/register start -->
+                        <!-- / Menu -->
+                        <!-- account/login/register -->
                         <div v-if="this.$store.state.user" class="navbar-nav ml-auto py-0">
                             <div class="nav-item dropdown">
                                 <div class="nav-link" data-toggle="dropdown">{{ this.$store.state.user.name }}
@@ -55,7 +61,7 @@
                             <a href="" @click.prevent="login" class="nav-item nav-link">Login</a>
                             <a href=""  @click.prevent="register" class="nav-item nav-link">Register</a>
                         </div>
-                        <!-- account/login/register finish -->
+                        <!-- / account/login/register -->
                     </div>
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
@@ -97,7 +103,7 @@
             </div>
         </div>
     </div>
-    <!-- Navbar End -->
+    <!-- / Navbar -->
 </template>
 
 <script>
@@ -113,6 +119,7 @@ export default {
             ],
 
             categories: [],
+            chosenCategoryID: undefined,
         }
     },
 
@@ -136,33 +143,42 @@ export default {
         },
 
         setCategoryProducts(categoryID) {
+            this.chosenCategoryID = categoryID
             this.axios.get(`${this.domain}/api/v1/products/category/${categoryID}`)
                 .then(res => {
                     this.$store.commit('setCategoryProducts', res.data.data)
                 }).catch(err => {
                 console.log(err.message)
             })
+        },
+
+        getExistCategories() {
+            this.axios.get(`${this.domain}/api/v1/categories`)
+                .then(res => {
+                    this.categories = res.data
+                }).catch(err => {
+                console.log(err.message)
+            })
+        },
+
+        updateUserByToken() {
+            const jwt = localStorage.getItem('jwt')
+            if (jwt) {
+                this.$store.commit('updateUserByToken', {
+                    'token': jwt,
+                    'axios': this.axios,
+                    'domain': this.domain
+                })
+            }
         }
     },
 
     created() {
-        this.axios.get(`${this.domain}/api/v1/categories`)
-            .then(res => {
-                this.categories = res.data
-            }).catch(err => {
-            console.log(err.message)
-        })
+        this.getExistCategories()
     },
 
     mounted() {
-        const jwt = localStorage.getItem('jwt')
-        if (jwt) {
-            this.$store.commit('updateUserByToken', {
-                'token': jwt,
-                'axios': this.axios,
-                'domain': this.domain
-            })
-        }
+        this.updateUserByToken()
     }
 }
 </script>

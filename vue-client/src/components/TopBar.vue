@@ -8,9 +8,12 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+                <form>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input type="text" class="form-control" placeholder="Search for products"
+                               v-model="q"
+                               @keydown.enter.prevent="getSearchedProducts"
+                        >
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
@@ -37,6 +40,7 @@ export default {
     data() {
         return {
             cartCount: 0,
+            q: '',
         }
     },
 
@@ -50,6 +54,15 @@ export default {
                     this.cartCount += product.qty
                 })
             }
+        },
+
+        getSearchedProducts() {
+            this.axios.get(`${this.domain}/api/v1/products/q/${this.q}`)
+                .then(res => {
+                    this.$store.state.searchedProducts = res.data.data
+                }).catch(err => {
+                    console.log(err.message)
+            })
         }
     },
 

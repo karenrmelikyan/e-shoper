@@ -10,24 +10,14 @@
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search by name">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
-                                            <i class="fa fa-search"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </form>
-
+                            <SearchByName />
                             <SortBy />
                         </div>
                     </div>
 
                     <div v-for="product in products" class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
-                            <router-link :to="{name: 'product', params: {id: product.id}}">
+                            <router-link :to="{ name: 'product', params: { id: product.id }}">
                                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                                     <img class="img-fluid w-100" :src="product.image_url" alt="">
                                 </div>
@@ -79,6 +69,7 @@
 <script>
 import SidebarFilter from "../components/SidebarFilter.vue";
 import SortBy from "../components/SortBy.vue";
+import SearchByName from "../components/SearchByName.vue";
 
 export default {
     name: "Shop",
@@ -86,6 +77,7 @@ export default {
     components: {
         SidebarFilter,
         SortBy,
+        SearchByName,
     },
 
     data() {
@@ -138,25 +130,20 @@ export default {
         }
     },
 
-    computed: {
-        categoryProducts() {
-            return this.$store.state.categoryProducts;
-        }
-    },
-
     created() {
         this.getShopItems()
         this.$store.watch(
             state => state.categoryProducts,
             (newVal, oldVal) => {
-                this.products = newVal;
-            }
-        );
+                this.products = newVal
+            })
+        this.$store.watch(
+            state => state.searchedProducts,
+            (newVal, oldVal) => {
+                this.products = newVal
+            })
     },
 
 }
 </script>
 
-<style scoped>
-
-</style>

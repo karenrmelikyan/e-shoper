@@ -31,10 +31,27 @@ class ProductController extends Controller
         return ProductResource::collection($cartProducts);
     }
 
-    public function getProductsByCategoryID(int $id)
+    public function getProductsByCategoryID(int $id): AnonymousResourceCollection
     {
         $products = Product::where('category_id', $id)->get();
 
         return ProductResource::collection($products);
     }
+
+    public function searchProductsByTitle(string $title): AnonymousResourceCollection
+    {
+        $products = Product::where('title', 'LIKE', '%' . $title . '%')->get();
+
+        return ProductResource::collection($products);
+    }
+
+    public function searchProductsByTitleAndDescription(string $q): AnonymousResourceCollection
+    {
+        $products = Product::where('title', 'LIKE', '%' . $q . '%')
+            ->orWhere('description', 'LIKE', '%' . $q . '%')
+            ->get();
+
+        return ProductResource::collection($products);
+    }
+
 }

@@ -31,6 +31,8 @@ Route::prefix('v1')->group(function() {
     Route::get('/products/{id}', [ProductController::class, 'getProductDetails']);
     Route::post('/get-cart-products', [ProductController::class, 'getCartProducts']);
     Route::get('/products/category/{id}', [ProductController::class, 'getProductsByCategoryID']);
+    Route::get('/products/title/{title}', [ProductController::class, 'searchProductsByTitle']);
+    Route::get('/products/q/{q}', [ProductController::class, 'searchProductsByTitleAndDescription']);
 
     // product filtration
     Route::get('/filters', [FilterController::class, 'index']);

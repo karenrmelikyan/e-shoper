@@ -6,6 +6,7 @@ const store = createStore({
             user: undefined,
             previewsPath: undefined,
             categoryProducts: [],
+            searchedProducts: [],
         }
     },
 
@@ -30,6 +31,10 @@ const store = createStore({
 
         setCategoryProducts(state, payload) {
             this.state.categoryProducts = payload
+        },
+
+        setSearchedProducts(state, payload) {
+            this.state.searchedProducts = payload
         }
     },
 })

@@ -8,6 +8,7 @@
 import TopBar from '../../components/TopBar.vue'
 import NavBar from "../../components/NavBar.vue";
 import SupportChat from "../../components/SupportChat.vue";
+
 export default {
     name: "Header",
 
@@ -18,7 +19,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-
-</style>

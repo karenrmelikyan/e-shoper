@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class CheckRoll
+class CheckRole
 {
     /**
      * Handle an incoming request.
